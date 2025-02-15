@@ -42,12 +42,15 @@ const ShopComponent = () => {
 
   const dogs = products.filter((item) => item.type === "Dog")
   const cats = products.filter((item) => item.type === "Cat")
+  const fish = products.filter((item) => item.type === "Fish")
+  const parrot = products.filter((item) => item.type === "Parrot")
+  const rabbit = products.filter((item) => item.type === "Rabbit")
   const DogFood = products.filter((item) => item.type === "Dog Food")
   const CatFood = products.filter((item) => item.type === "Cat Food")
   const FishFood = products.filter((item) => item.type === "Fish Food")
   const PetToys = products.filter((item) => item.type === "Pet Toys")
-  const ParrotFood = products.filter((item) => item.type === "Parrot Toys")
-  const RabbitFood = products.filter((item) => item.type === "Rabbit Toys")
+  const ParrotFood = products.filter((item) => item.type === "Parrot Food")
+  const RabbitFood = products.filter((item) => item.type === "Rabbit Food")
   const Accessories = products.filter((item) => item.type === "Accessories")
   const SmallPet = products.filter((item) => item.type === "Small Pet Food")
   return (
@@ -95,6 +98,102 @@ const ShopComponent = () => {
               <div key={index} className="product-img-con">
                 <Link
                   to={`/cats/${item._id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <img className="img-class" src={item.main} alt="product-img" />
+                  <div className="price">
+                    <p className="name">{item.title}</p>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <p>${item.price}</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+        </div>
+        <div className='product-name'> 
+          <h1>Rabbits</h1>
+          <img src={underline} alt="underline-img" />
+         </div>
+        <div className='main-con'>
+        <div className="grid">
+          {rabbit.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
+                <Link
+                  to={`/others/${item._id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <img className="img-class" src={item.main} alt="product-img" />
+                  <div className="price">
+                    <p className="name">{item.title}</p>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <p>${item.price}</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+        </div>
+        <div className='product-name'> 
+          <h1>Parrots</h1>
+          <img src={underline} alt="underline-img" />
+         </div>
+        <div className='main-con'>
+        <div className="grid">
+          {parrot.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
+                <Link
+                  to={`/others/${item._id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <img className="img-class" src={item.main} alt="product-img" />
+                  <div className="price">
+                    <p className="name">{item.title}</p>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <p>${item.price}</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+        </div>
+        <div className='product-name'> 
+          <h1>Fish</h1>
+          <img src={underline} alt="underline-img" />
+         </div>
+        <div className='main-con'>
+        <div className="grid">
+          {fish.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
+                <Link
+                  to={`/others/${item._id}`}
                   style={{ textDecoration: "none" }}
                 >
                   <img className="img-class" src={item.main} alt="product-img" />
@@ -259,10 +358,11 @@ const ShopComponent = () => {
                   to={`/${
                     item.type === "Parrot" ? "others" : "parrot-food"
                   }/${item._id}`}
+                  style={{ textDecoration: "none" }}
                 >
                   <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.main}</p>
+                    <p className="name">{item.title}</p>
                     <div
                       style={{
                         display: "flex",
@@ -292,6 +392,7 @@ const ShopComponent = () => {
                   to={`/${
                     item.type === "Rabbit" ? "others" : "rabbit-food"
                   }/${item._id}`}
+                  style={{ textDecoration: "none" }}
                 >
                   <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">

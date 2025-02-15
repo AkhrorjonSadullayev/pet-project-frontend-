@@ -205,7 +205,7 @@ export const DogFoodProducts = {
       OriginalPrice: 180,
       Price: 130,
       rate:"2.9",
-      desc:" Infused with omega fatty acids to promote a shiny coat and healthy skin.",
+      desc:"Infused with omega fatty acids to promote a shiny coat and healthy skin.",
       size:"1.81kg",
       type:"Dog Food",
       color:"Pink",

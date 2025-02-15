@@ -19,12 +19,6 @@ import { DataNews } from '../../mock/carousel.datanews'
 import SeconConComponent from './seconCon'
 import { NewPostedProducts } from '../../mock/postData'
 import { Link } from 'react-router-dom'
-import { DogFoodProducts } from '../../mock/dogFood.data'
-import { CatFoodProducts } from '../../mock/catFood.data'
-import { AccessoriesProducts } from '../../mock/accessories.data'
-import { RabbitFoodProducts } from '../../mock/rabbitFood.data'
-import { PetDog } from '../../mock/Dogs.data'
-import { PetCat } from '../../mock/Cats.data'
 import { useEffect, useState } from 'react'
 import DogBestComponent from './types/dogBest'
 import CatBestComponent from './types/catBest'
@@ -34,6 +28,9 @@ import RabbitBestComponent from './types/rabbitBest'
 import ParrotbestComponent from './types/parrotBest'
 import PetToyBestComponent from './types/petToy'
 import SmallPetBestComponent from './types/smallPetBest'
+import axios from 'axios'
+import { baseApi } from '../../utils/api.constants'
+import { toast } from 'react-toastify'
 
 type ActiveState = "Dog" | "Cat" | "Accessories" | "Fish" | "Parrot" | "PetToy" | "Rabbit" | "SmallPet";
 
@@ -46,6 +43,19 @@ const ParrotBest = () => <ParrotbestComponent/>;
 const PetToyBest = () => <PetToyBestComponent/>;
 const RabbitBest = () => <RabbitBestComponent/>;
 const SmallPetBest = () => <SmallPetBestComponent/>;
+interface Todo {
+  _id: string;
+  type: string;
+  location: string;
+  title: string;
+  desc: string;
+  price: number;
+  color: string;
+  main: string;
+  detail: string;
+  detailtwo: string;
+  detailthree: string;
+}
  const MainPageComponent = () => {
   const [active, setActive] = useState<ActiveState>("Dog");
 
@@ -59,24 +69,23 @@ const SmallPetBest = () => <SmallPetBestComponent/>;
     Rabbit: <RabbitBest />,
     SmallPet: <SmallPetBest />,
   };
-  const trendingCat = PetCat.PetCatList.filter(trendingCat =>{
-    return trendingCat.id === 16 || trendingCat.id === 9
-  })
-  const trendingDog = PetDog.PetDogList.filter(trendingDog =>{
-    return trendingDog.id === 17
-  })
-  const trendingDogFood = DogFoodProducts.DogFoodProductList.filter(trendingDogFood =>{
-    return trendingDogFood.id === 4 || trendingDogFood.id === 11 
-  })
-  const trendingCatFood = CatFoodProducts.CatFoodProductList.filter(trendingCatFood => {
-    return trendingCatFood.id === 20 
-  })
-  const trendingAcccessories = AccessoriesProducts.AccessoriesProductList.filter(trendingAcccessories =>{
-    return trendingAcccessories.id === 7 
-  })
-  const trendingRabbit = RabbitFoodProducts.RabbitFoodProductList.filter(trendingRabbit=>{
-    return trendingRabbit.id === 5
-  })
+  const [products, setProducts] = useState<Todo[]>([]);const getallTodo = async (search: string) => {
+    try {
+      const { data } = await axios.get(`${baseApi}/todo/get-all`, {
+        params: { search }
+      });
+  
+      if (data.success) {
+        const randomData = data.data.sort(() => Math.random() - 0.8).slice(0, 8); // ✅ Random 5 ta olamiz
+        setProducts(randomData);
+      }
+    } catch (error) {
+      toast.error("Error fetching todos.");
+    }
+  };
+  useEffect(() => {
+    getallTodo("");
+  }, []);
   const [ loading,setLoading ] = useState(false)
   useEffect(()=> {
     setLoading(true)
@@ -84,6 +93,20 @@ const SmallPetBest = () => <SmallPetBestComponent/>;
       setLoading(false)
     },8000)
   },[])
+  const typeRoutes: Record<string, string> = {
+    "Dog Food": "dog-food",
+    "Cat Food": "cat-food",
+    "Parrot Food": "parrot-food",
+    "Rabbit Food": "rabbit-food",
+    Accessories: "accessories",
+    "Pet Toys": "pet-toys",
+    "Small Pet Food": "small-pet",
+    Dog: "dogs",
+    Cat: "cats",
+    Fish: "others",
+    Rabbit: "others",
+    Parrot: "others",
+  };
   return (
     <MainPageCon>
       {/* main container start */}
@@ -210,79 +233,17 @@ const SmallPetBest = () => <SmallPetBestComponent/>;
   
     <div className='First-grid'>
       <div className='grid-con'>
-         {trendingDog.map((list) => (
-             <Link key={list.id} to={`/dogs/${list.id}`} style={{ textDecoration: 'none' }}>
-              <div className='product-img-con' key={list.id}>
-                  <img className='img' src={list.dog.image} alt="product-img" />
+      {products.map((value: Todo, index: number)=>(
+            <Link
+            style={{ textDecoration: "none" }}
+            to={`/${typeRoutes[value.type] || "fish-food"}/${value._id}`}
+          >
+              <div className='product-img-con' key={index}>
+                  <img className='img' src={value.main} alt="product-img" />
                   <div className='price'>
-                      <p className='name'>{list.dog.name}</p>
+                      <p className='name'>{value.title}</p>
                       <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                          <p>${list.dog.Price}</p>
-                      </div>
-                  </div>
-              </div>
-              </Link>
-          ))}
-          {trendingDogFood.map((list) => (
-                       <Link key={list.id} to={`/pet-food/dog-food/${list.id}`} style={{ textDecoration: 'none' }}>
-              <div className='product-img-con' key={list.id}>
-                  <img   className='img' src={list.DogFood.image} alt="product-img" />
-                  <div className='price'>
-                      <p className='name'>{list.DogFood.name}</p>
-                      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                          <p>${list.DogFood.Price}</p>
-                      </div>
-                  </div>
-              </div>
-              </Link>
-          ))}
-         {trendingCatFood.map((list) => (
-              <Link key={list.id} to={`/pet-food/cat-food/${list.id}`} style={{ textDecoration: 'none' }}>
-              <div className='product-img-con' key={list.id}>
-                  <img  className='img' src={list.Catfood.image} alt="product-img" />
-                  <div className='price'>
-                      <p className='name'>{list.Catfood.name}</p>
-                      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                          <p>${list.Catfood.Price}</p>
-                      </div>
-                  </div>
-              </div>
-              </Link>
-          ))}
-           {trendingAcccessories.map((list) => (
-              <Link key={list.id} to={`/pet-food/accessories/${list.id}`} style={{ textDecoration: 'none' }}>
-              <div className='product-img-con' key={list.id}>
-                  <img  className='img' src={list.Accessories.image} alt="product-img" />
-                  <div className='price'>
-                      <p className='name'>{list.Accessories.name}</p>
-                      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                          <p>${list.Accessories.Price}</p>
-                      </div>
-                  </div>
-              </div>
-              </Link>
-          ))}
-        {trendingRabbit.map((list) => (
-             <Link key={list.id} to={`/pet-food/rabbit-food/${list.id}`} style={{ textDecoration: 'none' }}>
-              <div className='product-img-con' key={list.id}>
-                  <img  className='img' src={list.RabbitFood.image} alt="product-img" />
-                  <div className='price'>
-                      <p className='name'>{list.RabbitFood.name}</p>
-                      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                          <p>${list.RabbitFood.Price}</p>
-                      </div>
-                  </div>
-              </div>
-              </Link>
-          ))}
-        {trendingCat.map((list) => (
-            <Link key={list.id} to={`/cats/${list.id}`} style={{ textDecoration: 'none' }}>
-              <div className='product-img-con' key={list.id}>
-                  <img className='img' src={list.cat.image} alt="product-img" />
-                  <div className='price'>
-                      <p className='name'>{list.cat.name}</p>
-                      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                          <p>${list.cat.Price}</p>
+                          <p>${value.price}</p>
                       </div>
                   </div>
               </div>

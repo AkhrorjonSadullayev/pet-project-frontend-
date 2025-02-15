@@ -35,7 +35,7 @@ interface Todo {
   detailthree: string;
 }
 const RabbitFoodComponent = () => {
-  const [value, setValue] = useState<number[]>([0, 300]);
+  const [value, setValue] = useState<number[]>([0, 400]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<string[]>([]);
   const [selectedType, setSelectedType] = useState<string[]>([]);
@@ -231,7 +231,7 @@ const RabbitFoodComponent = () => {
                   valueLabelDisplay="auto"
                   getAriaValueText={valuetext}
                   min={0}
-                  max={300}
+                  max={400}
                   step={1}
                   sx={{
                     color: "#7F4D4F",

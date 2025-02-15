@@ -182,7 +182,7 @@ export const ParrotProducts = {
         OriginalPrice: 16,
         Price: 12,
         rate:"4.1",
-        desc:"Marriage's offers a variety of nutritious parrot foods designed to promote overall health and well-being for different types of parrots. Their products are made with a blend of wholesome ingredients, including fruits, seeds, and vegetables. One of their popular offerings is the Premier Parrot Food, which contains a balanced mix of seeds like sunflower, maize, and pumpkin, as well as dried fruits such as raisins and papaya. This blend supports healthy plumage, digestion, and energy levels, while keeping parrots entertained due to the variety of textures and shapes​",
+        desc:"1​",
         size:"12.55kg",
         type:"Parrot Food",
         color:"Blue",
