@@ -9,7 +9,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { Box, Slider } from "@mui/material";
 import { useEffect, useState } from "react";
-import { DogFoodProducts } from "../../mock/dogFood.data";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -32,9 +31,6 @@ interface Todo {
   detailthree: string;
 }
 const DogFoodComponent = () => {
-  const bestSeller = DogFoodProducts.DogFoodProductList.filter(bestSeller =>{
-    return bestSeller.id === 7 ||  bestSeller.id === 16 ||  bestSeller.id === 10
-  })
   const [value, setValue] = useState<number[]>([0, 500]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<string[]>([]);
@@ -327,55 +323,6 @@ const DogFoodComponent = () => {
             />
           </FormGroup>
         </AccordionDetails>
-          </Accordion>
-          <Accordion
-            defaultExpanded
-            sx={{
-              boxShadow: "none",
-              backgroundColor: "#FFF",
-              border: "1px solid rgba(51, 51, 51, 0.03)",
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3-content"
-              id="panel3-header"
-              className="category-style"
-            >
-              Best Sellers
-            </AccordionSummary>
-            <AccordionDetails>
-            {bestSeller.map((list) => (
-              <Link to={`/dog-food/${list.id}`} style={{ textDecoration: 'none',color:'black' }}>
-              <div style={{ display: "flex", gap: "20px" }}>
-                    <img
-                        src={list.DogFood.image}
-                        alt="dog-food-img"
-                        width={"59px"}
-                        height={"72px"}
-                      />
-                      <div>
-                        <p>{list.DogFood.name}</p>
-                        <div
-                          style={{ display: "flex", gap: "10px", marginTop: "10px" }}
-                        >
-                          <p
-                            style={{
-                              textDecorationLine: "line-through",
-                              color: "grey",
-                            }}
-                          >
-                            ${list.DogFood.OriginalPrice}
-                          </p>
-                          <p style={{ color: "#7F4D4F" }}>
-                          ${list.DogFood.Price}
-                          </p>
-                        </div>
-                      </div>
-                      </div>
-                      </Link>
-              ))}
-            </AccordionDetails>
           </Accordion>
         </div>
 

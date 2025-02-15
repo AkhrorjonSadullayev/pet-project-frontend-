@@ -1,7 +1,6 @@
 const TestComponent = () => {
   return (
-    <div>
-  </div>
+    <div>test</div>
   )
 }
 

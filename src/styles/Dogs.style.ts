@@ -39,10 +39,10 @@ export const MainContainer = styled.div`
 }
 
 .grid{
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-areas: "a a a a";
     padding: 0px 30px;
-    gap: 35px; 
+    gap: 15px;
     max-width: 1200px;
     width: 100%;
     height: 100%;

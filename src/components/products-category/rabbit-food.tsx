@@ -14,7 +14,6 @@ import { Box } from "@mui/system";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { RabbitFoodProducts } from '../../mock/rabbitFood.data';
 import axios from 'axios';
 import { baseApi } from '../../utils/api.constants';
 import { toast } from 'react-toastify';
@@ -36,10 +35,6 @@ interface Todo {
   detailthree: string;
 }
 const RabbitFoodComponent = () => {
-  const data = RabbitFoodProducts.RabbitFoodProductList
-  const bestSeller = RabbitFoodProducts.RabbitFoodProductList.filter(bestSeller =>{
-    return bestSeller.id === 7 ||  bestSeller.id === 14 ||  bestSeller.id === 10
-  })
   const [value, setValue] = useState<number[]>([0, 300]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<string[]>([]);
@@ -550,56 +545,6 @@ const RabbitFoodComponent = () => {
                   sx={{ color: "#4B0082" }}
                 />
               </FormGroup>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion
-            defaultExpanded
-            sx={{
-              boxShadow: "none",
-              backgroundColor: "#FFF",
-              border: "1px solid rgba(51, 51, 51, 0.03)",
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3-content"
-              id="panel3-header"
-              className="category-style"
-            >
-              Best Sellers
-            </AccordionSummary>
-            <AccordionDetails>
-            {bestSeller.map((list) => (
-              <Link to={`/rabbit-food/${list.id}`} style={{ textDecoration: 'none',color:'black' }}>
-              <div style={{ display: "flex", gap: "20px" }}>
-                    <img
-                        src={list.RabbitFood.image}
-                        alt="dog-food-img"
-                        width={"59px"}
-                        height={"72px"}
-                      />
-                      <div>
-                        <p>{list.RabbitFood.name}</p>
-                        <div
-                          style={{ display: "flex", gap: "10px", marginTop: "10px" }}
-                        >
-                          <p
-                            style={{
-                              textDecorationLine: "line-through",
-                              color: "grey",
-                            }}
-                          >
-                            ${list.RabbitFood.OriginalPrice}
-                          </p>
-                          <p style={{ color: "#7F4D4F" }}>
-                          ${list.RabbitFood.Price}
-                          </p>
-                        </div>
-                      </div>
-                      </div>
-                      </Link>
-              ))}
             </AccordionDetails>
           </Accordion>
         </div>

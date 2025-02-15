@@ -1,28 +1,55 @@
 import { Link } from 'react-router-dom'
-import { PetDog } from '../../mock/Dogs.data'
 import '../../styles/shop.style'
 import { ShopMainContainer } from '../../styles/shop.style'
 import underline from '../../assets/UnderLine.svg'
-import { PetCat } from '../../mock/Cats.data'
-import { DogFoodProducts } from '../../mock/dogFood.data'
-import { CatFoodProducts } from '../../mock/catFood.data'
-import { FishFoodProducts } from '../../mock/fishFood.data'
-import { PetoysProducts } from '../../mock/petToys.data'
-import { ParrotProducts } from '../../mock/parrot.data'
-import { RabbitFoodProducts } from '../../mock/rabbitFood.data'
-import { AccessoriesProducts } from '../../mock/accessories.data'
-import { SmallPetFoodProducts } from '../../mock/small-pet.data'
+import axios from 'axios'
+import { baseApi } from '../../utils/api.constants'
+import { toast } from 'react-toastify'
+import { useEffect, useState } from 'react'
+interface Todo {
+  _id: string;
+  phone: number;
+  type: string;
+  location: string;
+  title: string;
+  desc: string;
+  price: number;
+  color: string;
+  main: string;
+  detail: string;
+  kg: number;
+  detailtwo: string;
+  detailthree: string;
+}
 const ShopComponent = () => {
-    const DogPet = PetDog.PetDogList
-    const CatPet = PetCat.PetCatList
-    const DogFood = DogFoodProducts.DogFoodProductList
-    const CatFood = CatFoodProducts.CatFoodProductList
-    const FishFood = FishFoodProducts.FishFoodProductList
-    const PetToys = PetoysProducts.PetToysProductList
-    const ParrotFood = ParrotProducts.ParrotProductList
-    const RabbitFood = RabbitFoodProducts.RabbitFoodProductList
-    const AccessoryPet = AccessoriesProducts.AccessoriesProductList
-    const SmallPetFood = SmallPetFoodProducts.SmallPetFoodProductList
+  const [products, setProducts] = useState<Todo[]>([]);
+  const getallTodo = async (search: string) => {
+    try {
+      const { data } = await axios.get(`${baseApi}/todo/get-all`, {
+        params: { search },
+      });
+      if (data.success) {
+        setProducts(data.data);
+      }
+    } catch (error) {
+      toast.error("Error fetching todos.");
+    }
+  };
+
+  useEffect(() => {
+    getallTodo("");
+  }, []);
+
+  const dogs = products.filter((item) => item.type === "Dog")
+  const cats = products.filter((item) => item.type === "Cat")
+  const DogFood = products.filter((item) => item.type === "Dog Food")
+  const CatFood = products.filter((item) => item.type === "Cat Food")
+  const FishFood = products.filter((item) => item.type === "Fish Food")
+  const PetToys = products.filter((item) => item.type === "Pet Toys")
+  const ParrotFood = products.filter((item) => item.type === "Parrot Toys")
+  const RabbitFood = products.filter((item) => item.type === "Rabbit Toys")
+  const Accessories = products.filter((item) => item.type === "Accessories")
+  const SmallPet = products.filter((item) => item.type === "Small Pet Food")
   return (
     <ShopMainContainer>
         <div className='product-name'> 
@@ -31,16 +58,16 @@ const ShopComponent = () => {
          </div>
         <div className='main-con'>
         <div className="grid">
-          {DogPet.map((item) => (
-            <div key={item.id} >
-              <div key={item.id} className="product-img-con">
+          {dogs.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
                 <Link
-                  to={`/dogs/${item.id}`}
+                  to={`/dogs/${item._id}`}
                   style={{ textDecoration: "none" }}
                 >
-                  <img className="img-class" src={item.dog.image} alt="product-img" />
+                  <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.dog.name}</p>
+                    <p className="name">{item.title}</p>
                     <div
                       style={{
                         display: "flex",
@@ -48,8 +75,7 @@ const ShopComponent = () => {
                         gap: "10px",
                       }}
                     >
-                      <p className="decoration">${item.dog.OriginalPrice}</p>
-                      <p>${item.dog.Price}</p>
+                      <p>${item.price}</p>
                     </div>
                   </div>
                 </Link>
@@ -64,16 +90,16 @@ const ShopComponent = () => {
          </div>
         <div className='main-con'>
         <div className="grid">
-          {CatPet.map((item) => (
-            <div key={item.id} >
-              <div key={item.id} className="product-img-con">
+          {cats.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
                 <Link
-                  to={`/cats/${item.id}`}
+                  to={`/cats/${item._id}`}
                   style={{ textDecoration: "none" }}
                 >
-                  <img className="img-class" src={item.cat.image} alt="product-img" />
+                  <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.cat.name}</p>
+                    <p className="name">{item.title}</p>
                     <div
                       style={{
                         display: "flex",
@@ -81,8 +107,7 @@ const ShopComponent = () => {
                         gap: "10px",
                       }}
                     >
-                      <p className="decoration">${item.cat.OriginalPrice}</p>
-                      <p>${item.cat.Price}</p>
+                      <p>${item.price}</p>
                     </div>
                   </div>
                 </Link>
@@ -97,16 +122,16 @@ const ShopComponent = () => {
          </div>
         <div className='main-con'>
         <div className="grid">
-          {DogFood.map((item) => (
-            <div key={item.id} >
-              <div key={item.id} className="product-img-con">
+          {DogFood.map((item,index) => (
+            <div key={index}>
+              <div key={index} className="product-img-con">
                 <Link
-                  to={`/pet-food/dog-food/${item.id}`}
+                  to={`/dog-food/${item._id}`}
                   style={{ textDecoration: "none" }}
                 >
-                  <img className="img-class" src={item.DogFood.image} alt="product-img" />
+                  <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.DogFood.name}</p>
+                    <p className="name">{item.title}</p>
                     <div
                       style={{
                         display: "flex",
@@ -114,8 +139,7 @@ const ShopComponent = () => {
                         gap: "10px",
                       }}
                     >
-                      <p className="decoration">${item.DogFood.OriginalPrice}</p>
-                      <p>${item.DogFood.Price}</p>
+                      <p>${item.price}</p>
                     </div>
                   </div>
                 </Link>
@@ -130,16 +154,16 @@ const ShopComponent = () => {
          </div>
         <div className='main-con'>
         <div className="grid">
-          {CatFood.map((item) => (
-            <div key={item.id} >
-              <div key={item.id} className="product-img-con">
+          {CatFood.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
                 <Link
-                  to={`/pet-food/cat-food/${item.id}`}
+                  to={`/cat-food/${item._id}`}
                   style={{ textDecoration: "none" }}
                 >
-                  <img className="img-class" src={item.Catfood.image} alt="product-img" />
+                  <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.Catfood.name}</p>
+                    <p className="name">{item.title}</p>
                     <div
                       style={{
                         display: "flex",
@@ -147,8 +171,7 @@ const ShopComponent = () => {
                         gap: "10px",
                       }}
                     >
-                      <p className="decoration">${item.Catfood.OriginalPrice}</p>
-                      <p>${item.Catfood.Price}</p>
+                      <p>${item.price}</p>
                     </div>
                   </div>
                 </Link>
@@ -163,16 +186,18 @@ const ShopComponent = () => {
          </div>
         <div className='main-con'>
         <div className="grid">
-          {FishFood.map((item) => (
-            <div key={item.id} >
-              <div key={item.id} className="product-img-con">
+          {FishFood.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
                 <Link
-                  to={`/pet-food/fish-food/${item.id}`}
+                  to={`/${
+                    item.type === "Fish" ? "others" : "fish-food"
+                  }/${item._id}`}
                   style={{ textDecoration: "none" }}
                 >
-                  <img className="img-class" src={item.FishFood.image} alt="product-img" />
+                  <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.FishFood.name}</p>
+                    <p className="name">{item.title}</p>
                     <div
                       style={{
                         display: "flex",
@@ -180,8 +205,7 @@ const ShopComponent = () => {
                         gap: "10px",
                       }}
                     >
-                      <p className="decoration">${item.FishFood.OriginalPrice}</p>
-                      <p>${item.FishFood.Price}</p>
+                      <p>${item.price}</p>
                     </div>
                   </div>
                 </Link>
@@ -196,16 +220,16 @@ const ShopComponent = () => {
          </div>
         <div className='main-con'>
         <div className="grid">
-          {PetToys.map((item) => (
-            <div key={item.id} >
-              <div key={item.id} className="product-img-con">
+          {PetToys.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
                 <Link
-                  to={`/pet-food/pet-toys/${item.id}`}
+                  to={`/pet-toys/${item._id}`}
                   style={{ textDecoration: "none" }}
                 >
-                  <img className="img-class" src={item.PetToys.image} alt="product-img" />
+                  <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.PetToys.name}</p>
+                    <p className="name">{item.title}</p>
                     <div
                       style={{
                         display: "flex",
@@ -213,8 +237,7 @@ const ShopComponent = () => {
                         gap: "10px",
                       }}
                     >
-                      <p className="decoration">${item.PetToys.OriginalPrice}</p>
-                      <p>${item.PetToys.Price}</p>
+                      <p>${item.price}</p>
                     </div>
                   </div>
                 </Link>
@@ -229,16 +252,17 @@ const ShopComponent = () => {
          </div>
         <div className='main-con'>
         <div className="grid">
-          {ParrotFood.map((item) => (
-            <div key={item.id} >
-              <div key={item.id} className="product-img-con">
+          {ParrotFood.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
                 <Link
-                  to={`/pet-food/parrot-food/${item.id}`}
-                  style={{ textDecoration: "none" }}
+                  to={`/${
+                    item.type === "Parrot" ? "others" : "parrot-food"
+                  }/${item._id}`}
                 >
-                  <img className="img-class" src={item.ParrotFood.image} alt="product-img" />
+                  <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.ParrotFood.name}</p>
+                    <p className="name">{item.main}</p>
                     <div
                       style={{
                         display: "flex",
@@ -246,8 +270,7 @@ const ShopComponent = () => {
                         gap: "10px",
                       }}
                     >
-                      <p className="decoration">${item.ParrotFood.OriginalPrice}</p>
-                      <p>${item.ParrotFood.Price}</p>
+                      <p>${item.price}</p>
                     </div>
                   </div>
                 </Link>
@@ -262,16 +285,17 @@ const ShopComponent = () => {
          </div>
         <div className='main-con'>
         <div className="grid">
-          {RabbitFood.map((item) => (
-            <div key={item.id} >
-              <div key={item.id} className="product-img-con">
+          {RabbitFood.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
                 <Link
-                  to={`/pet-food/rabbit-food/${item.id}`}
-                  style={{ textDecoration: "none" }}
+                  to={`/${
+                    item.type === "Rabbit" ? "others" : "rabbit-food"
+                  }/${item._id}`}
                 >
-                  <img className="img-class" src={item.RabbitFood.image} alt="product-img" />
+                  <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.RabbitFood.name}</p>
+                    <p className="name">{item.title}</p>
                     <div
                       style={{
                         display: "flex",
@@ -279,8 +303,7 @@ const ShopComponent = () => {
                         gap: "10px",
                       }}
                     >
-                      <p className="decoration">${item.RabbitFood.OriginalPrice}</p>
-                      <p>${item.RabbitFood.Price}</p>
+                      <p>${item.price}</p>
                     </div>
                   </div>
                 </Link>
@@ -295,16 +318,16 @@ const ShopComponent = () => {
          </div>
         <div className='main-con'>
         <div className="grid">
-          {AccessoryPet.map((item) => (
-            <div key={item.id} >
-              <div key={item.id} className="product-img-con">
+          {Accessories.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
                 <Link
-                  to={`/pet-food/accessories/${item.id}`}
+                  to={`/accessories/${item._id}`}
                   style={{ textDecoration: "none" }}
                 >
-                  <img className="img-class" src={item.Accessories.image} alt="product-img" />
+                  <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.Accessories.name}</p>
+                    <p className="name">{item.title}</p>
                     <div
                       style={{
                         display: "flex",
@@ -312,8 +335,7 @@ const ShopComponent = () => {
                         gap: "10px",
                       }}
                     >
-                      <p className="decoration">${item.Accessories.OriginalPrice}</p>
-                      <p>${item.Accessories.Price}</p>
+                      <p>${item.price}</p>
                     </div>
                   </div>
                 </Link>
@@ -328,16 +350,16 @@ const ShopComponent = () => {
          </div>
         <div className='main-con'>
         <div className="grid">
-          {SmallPetFood.map((item) => (
-            <div key={item.id} >
-              <div key={item.id} className="product-img-con">
+          {SmallPet.map((item,index) => (
+            <div key={index} >
+              <div key={index} className="product-img-con">
                 <Link
-                  to={`/pet-food/small-pet/${item.id}`}
+                  to={`/pet-food/small-pet/${item._id}`}
                   style={{ textDecoration: "none" }}
                 >
-                  <img className="img-class" src={item.SmallPet.image} alt="product-img" />
+                  <img className="img-class" src={item.main} alt="product-img" />
                   <div className="price">
-                    <p className="name">{item.SmallPet.name}</p>
+                    <p className="name">{item.title}</p>
                     <div
                       style={{
                         display: "flex",
@@ -345,8 +367,7 @@ const ShopComponent = () => {
                         gap: "10px",
                       }}
                     >
-                      <p className="decoration">${item.SmallPet.OriginalPrice}</p>
-                      <p>${item.SmallPet.Price}</p>
+                      <p>${item.price}</p>
                     </div>
                   </div>
                 </Link>

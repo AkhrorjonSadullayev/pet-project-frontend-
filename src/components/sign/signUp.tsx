@@ -98,7 +98,7 @@ const SignUp = () => {
                 value={password}
                 onChange={handleChangeInput}
                 type="password"
-                placeholder="Your Password"
+                placeholder="At least 6 characters,"
               />
             </div>
             <button className="sign-but" type="button" onClick={sendOtp}>

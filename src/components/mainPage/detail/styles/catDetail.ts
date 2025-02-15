@@ -78,6 +78,7 @@ export const FilterDataCon = styled.div`
         flex-direction: column;
         max-width: 350px;
         width: 100%;
+        gap: 10px;
         .price{
             display: flex;
             .decoration{

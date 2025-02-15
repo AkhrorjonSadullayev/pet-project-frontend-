@@ -658,7 +658,7 @@ const FishFoodDetail: React.FC = () => {
             <div key={index} >
               <div key={item._id} className="product-img-con">
                 <Link
-                  to={`/pet-food/${
+                  to={`/${
                     item.type === "Fish" ? "others" : "fish-food"
                   }/${item._id}`}
                   style={{ textDecoration: "none" }}
@@ -694,7 +694,7 @@ const FishFoodDetail: React.FC = () => {
             <div key={index} >
               <div key={item._id} className="product-img-con">
                 <Link
-                  to={`/pet-food/${
+                  to={`/${
                     item.type === "Parrot Food" ? "parrot-food" : "others"
                   }/${item._id}`}
                   style={{ textDecoration: "none" }}

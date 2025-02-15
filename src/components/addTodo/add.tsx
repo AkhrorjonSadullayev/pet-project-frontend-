@@ -3,8 +3,7 @@ import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { baseApi } from "../../utils/api.constants";
-import { FormControl, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent,  } from "@mui/material";
 
 interface Todo {
   _id: string;
@@ -133,7 +132,8 @@ function AddProduct() {
     try {
       const { data } = await axios.post(`${baseApi}/upload`, formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+        timeout:60000
+      });;
   
       if (data.success) {
         if (fieldName === 'main') {
@@ -289,8 +289,8 @@ function AddProduct() {
   <input
     type="number"
     name="kg"
-    min={0}
-    value={kg || ""}
+    step={0.01}
+    value={kg}
     onChange={handleChangeInput}
     placeholder="Weight (kg)"
     required
