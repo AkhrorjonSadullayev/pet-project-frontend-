@@ -5,7 +5,7 @@ import small from '../../assets/small-img.png'
 import scribble from '../../assets/scribble.svg'
 import line from '../../assets/UnderLine.svg'
 import done from '../../assets/done.svg'
-import myPhoto from "../../assets/myPhoto-copy.jpg";
+import myPhoto from "../../assets/rasm.jpg";
 import underlineWhite from '../../assets/UnderLineWhite.svg'
 import mouse from '../../assets/mouse-toy.svg'
 import healthy from '../../assets/healthy-pet.svg'
