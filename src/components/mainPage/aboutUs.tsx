@@ -5,7 +5,7 @@ import small from '../../assets/small-img.png'
 import scribble from '../../assets/scribble.svg'
 import line from '../../assets/UnderLine.svg'
 import done from '../../assets/done.svg'
-import me from '../../assets/myPhoto-copy.jpg'
+import myPhoto from "../../assets/myPhoto-copy.jpg";
 import underlineWhite from '../../assets/UnderLineWhite.svg'
 import mouse from '../../assets/mouse-toy.svg'
 import healthy from '../../assets/healthy-pet.svg'
@@ -61,7 +61,7 @@ const AboutUsComponent = () => {
             </div>
             </div>
             <div className='my-con'>
-                <img className='my-img' src={me} alt="my-img" />
+                <img className='my-img' src={myPhoto} alt="my-img" />
                 <div className='name'>
                     <h5>Sadullaev Akhrorjon</h5>
                     <p style={{color:'grey'}}>Developer</p>
