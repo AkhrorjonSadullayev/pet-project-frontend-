@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { baseApi } from "../../utils/api.constants.js";
+import { baseApi } from "../../utils/api.constants";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; 
 

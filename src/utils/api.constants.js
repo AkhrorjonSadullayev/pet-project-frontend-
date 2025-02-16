@@ -1,1 +1,0 @@
-export const baseApi = 'http://147.45.158.4:8080';
