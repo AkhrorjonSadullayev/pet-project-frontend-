@@ -1,1 +1,1 @@
-export const baseApi = 'http://localhost:8080';
+export const baseApi = 'http://147.45.102.103:8080';
